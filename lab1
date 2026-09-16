@@ -1,0 +1,119 @@
+erDiagram
+    AIRPORTS ||--o{ FLIGHTS : "departs from"
+    AIRPORTS ||--o{ FLIGHTS : "arrives at"
+    AIRLINES ||--o{ FLIGHTS : "operates"
+    
+    FLIGHTS ||--o{ BOOKINGS : "has"
+    PASSENGERS ||--o{ BOOKINGS : "makes"
+    
+    BOOKINGS ||--o{ BOOKING_AUDIT_LOGS : "logs changes"
+    BOOKINGS ||--|| BOARDING_PASSES : "generates"
+    BOOKINGS ||--o{ BAGGAGE : "includes"
+    
+    BAGGAGE ||--o{ BAGGAGE_CHECKS : "undergoes"
+    PASSENGERS ||--o{ BAGGAGE_CHECKS : "owns baggage for"
+    BOOKINGS ||--o{ BAGGAGE_CHECKS : "linked to"
+    
+    PASSENGERS ||--o{ SECURITY_CHECKS : "undergoes"
+
+    AIRPORTS {
+        int airport_id PK
+        string airport_name
+        string country
+        string state
+        string city
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    AIRLINES {
+        int airline_id PK
+        string airline_code
+        string name
+        string country
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    FLIGHTS {
+        int flight_id PK
+        int airline_id FK
+        int departure_airport_id FK
+        int arrival_airport_id FK
+        string departing_gate
+        string arriving_gate
+        datetime scheduled_departure_time
+        datetime scheduled_arrival_time
+        datetime actual_departure_time
+        datetime actual_arrival_time
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PASSENGERS {
+        int passenger_id PK
+        string first_name
+        string last_name
+        string gender
+        date date_of_birth
+        string country_of_citizenship
+        string country_of_residence
+        string passport_number
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    BOOKINGS {
+        int booking_id PK
+        int flight_id FK
+        int passenger_id FK
+        string status
+        string booking_platform
+        decimal ticket_price
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    BOOKING_AUDIT_LOGS {
+        int log_id PK
+        int booking_id FK
+        string old_status
+        string new_status
+        timestamp changed_at
+        text change_reason
+    }
+
+    BOARDING_PASSES {
+        int boarding_pass_id PK
+        int booking_id FK
+        string seat
+        datetime boarding_time
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    BAGGAGE {
+        int baggage_id PK
+        int booking_id FK
+        decimal weight_kg
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    BAGGAGE_CHECKS {
+        int baggage_checking_id PK
+        int baggage_id FK
+        int booking_id FK
+        int passenger_id FK
+        string check_results
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    SECURITY_CHECKS {
+        int security_check_id PK
+        int passenger_id FK
+        string check_results
+        timestamp created_at
+        timestamp updated_at
+    }
