@@ -1,0 +1,112 @@
+CREATE DATABASE IF NOT EXISTS airport_system;
+USE airport_system;
+
+CREATE TABLE Airport (
+    airport_id INT AUTO_INCREMENT PRIMARY KEY,
+    airport_name VARCHAR(100) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    state VARCHAR(50),
+    city VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Airline (
+    airline_id INT AUTO_INCREMENT PRIMARY KEY,
+    airline_code VARCHAR(10) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Passenger (
+    passenger_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    country_of_citizenship VARCHAR(50) NOT NULL,
+    country_of_residence VARCHAR(50) NOT NULL,
+    passport_number VARCHAR(20) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Flight (
+    flight_id INT AUTO_INCREMENT PRIMARY KEY,
+    airline_id INT NOT NULL,
+    departure_airport_id INT NOT NULL,
+    arrival_airport_id INT NOT NULL,
+    departing_gate VARCHAR(10),
+    arriving_gate VARCHAR(10),
+    scheduled_departure_time DATETIME NOT NULL,
+    scheduled_arrival_time DATETIME NOT NULL,
+    actual_departure_time DATETIME,
+    actual_arrival_time DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (airline_id) REFERENCES Airline(airline_id) ON DELETE CASCADE,
+    FOREIGN KEY (departure_airport_id) REFERENCES Airport(airport_id) ON DELETE CASCADE,
+    FOREIGN KEY (arrival_airport_id) REFERENCES Airport(airport_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Booking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_id INT NOT NULL,
+    passenger_id INT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    booking_platform VARCHAR(50) NOT NULL,
+    ticket_price DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON DELETE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Booking_Change (
+    change_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT NOT NULL,
+    change_details TEXT NOT NULL,
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Boarding_Pass (
+    boarding_pass_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT NOT NULL,
+    seat VARCHAR(10) NOT NULL,
+    boarding_time DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Baggage (
+    baggage_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT NOT NULL,
+    weight_in_kg DECIMAL(5,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Baggage_Check (
+    baggage_check_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT NOT NULL,
+    passenger_id INT NOT NULL,
+    check_results VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (booking_id) REFERENCES Booking(booking_id) ON DELETE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Security_Check (
+    security_check_id INT AUTO_INCREMENT PRIMARY KEY,
+    passenger_id INT NOT NULL,
+    check_results VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON DELETE CASCADE
+);
