@@ -112,9 +112,3 @@ Ref: Baggage_Check.booking_id > Booking.booking_id
 Ref: Baggage_Check.passenger_id > Passenger.passenger_id
 
 Ref: Security_Check.passenger_id > Passenger.passenger_id
-
-```mermaid
-erDiagram
-    AIRPORTS ||--o{ FLIGHTS : "departs"
-    ...
-```
