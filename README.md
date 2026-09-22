@@ -35,7 +35,7 @@ Primary keys (PK) uniquely identify records. Foreign keys (FK) establish relatio
 
 ## Files
 
-* `Untitled.pdf` — ER diagram and textual description.
+* `lab1.pdf` — ER diagram and textual description.
 * `llab1` — Editable ER diagram source file.
 
 ## Tool
