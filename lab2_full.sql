@@ -9,15 +9,6 @@
 -- PART 1. NORMALIZATION
 -- =====================================================
 
--- Task 1:
--- Original Booking_receipt table violates 1NF because
--- seat_numbers may contain multiple values.
---
--- It also has partial and transitive dependencies.
---
--- Task 2:
--- The following tables represent the normalized 3NF
--- structure of the booking receipt database.
 
 
 -- -----------------------------------------------------
@@ -152,27 +143,6 @@ INSERT INTO Booking_passenger VALUES
 (105, 5, '15D');
 
 
--- =====================================================
--- TASK 3. FUNCTIONAL DEPENDENCIES
--- =====================================================
-
--- booking_id -> flight_number, ticket_price
---
--- passenger_id -> passenger_full_name,
---                 passenger_passport_number
---
--- flight_number -> departure_airport_id,
---                  arrival_airport_id,
---                  airline_id
---
--- airline_id -> airline_name
---
--- airport_id -> airport_name, city
---
--- (booking_id, passenger_id) -> seat_number
---
--- These dependencies are used to separate the data
--- into normalized tables and reduce duplication.
 
 
 -- =====================================================
