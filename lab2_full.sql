@@ -1,28 +1,6 @@
--- Laboratory work 2
--- Database: airport_db
--- PostgreSQL
 
--- =========================
--- PART 1. NORMALIZATION
--- =========================
 
--- 1NF:
--- seat_numbers has more than one value in one cell.
--- In 1NF, each seat is stored in a separate row.
 
--- 2NF:
--- Passenger information is stored separately from booking information.
-
--- 3NF:
--- Airport and airline information are stored in separate tables.
-
--- Functional dependencies:
--- booking_id -> flight_number, ticket_price
--- passenger_id -> passenger_full_name, passenger_passport_number
--- flight_number -> departure_airport_id, arrival_airport_id, airline_id
--- airport_id -> airport_name, city
--- airline_id -> airline_name
--- (booking_id, passenger_id) -> seat_number
 
 CREATE TABLE Airline_receipt (
     airline_id INT PRIMARY KEY,
