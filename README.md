@@ -42,3 +42,20 @@ Primary keys (PK) uniquely identify records. Foreign keys (FK) establish relatio
 
 The ER diagram was created using diagrams.net.
 
+# Airport Database — Laboratory work 3 (DML)
+
+Continuation of Lab 1 (ERD) and Lab 2 (DDL, normalization) for the **International Airport** database.
+
+- `lab3.sql` — all 15 DML tasks (INSERT / UPDATE / DELETE / RETURNING), PostgreSQL.
+- `screenshots/` — a full-page screenshot of the code and result for each task.
+
+## How to run
+1. Create the tables from Lab 2.
+2. Run `lab3.sql` from top to bottom (section 0 prepares the tables, task 1 generates 200 rows per table).
+
+## Tasks
+1. Generate 200 random rows  2. Add KazAir  3. Update KazAir country  4. Add three airlines
+5. Delete 2024 flights  6. +15% ticket price  7. Delete tickets < 10000  8. Default code `UNK`
+9. Delete old unchecked baggage checks  10. Delete airports (NULL state, Mlawe/Kepuh)
+11. INSERT ... RETURNING  12. Uppercase countries  13. Update airline id 5
+14. Set state for Astana/London/Tokyo  15. Mark March 2024 baggage checks as Checked
